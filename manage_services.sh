@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Define the services
-SERVICES=("jenkins" "tomcat" "sonar" "postgresql")
+SERVICES=("jenkins" "tomcat" "sonar" "postgresql" "ssh")
 
 echo "=========================================="
 echo " Service Management Script"
 echo "=========================================="
-echo "Available Services: Jenkins, Tomcat, SonarQube, PostgreSQL"
+echo "Available: Jenkins, Tomcat, SonarQube, PostgreSQL, SSH, Ansible"
 echo "------------------------------------------"
 echo "Options:"
 echo "1) Stop all services"
@@ -62,7 +62,7 @@ case $choice in
         echo "All target services started."
         ;;
     3)
-        read -p "Enter the name of the service to start (jenkins, tomcat, sonar, postgresql): " start_service
+        read -p "Enter the name of the service to start (jenkins, tomcat, sonar, postgresql, ssh): " start_service
         # Convert to lowercase
         start_service=$(echo "$start_service" | tr '[:upper:]' '[:lower:]')
         
@@ -81,7 +81,7 @@ case $choice in
             sudo systemctl start $start_service
             sudo systemctl status $start_service --no-pager
         else
-            echo "Invalid service name. Allowed values: jenkins, tomcat, sonar, postgresql"
+            echo "Invalid service name. Allowed values: jenkins, tomcat, sonar, postgresql, ssh"
         fi
         ;;
     4)
@@ -100,6 +100,12 @@ case $choice in
                echo "$service: $status"
             fi
         done
+        # Check Ansible specifically
+        if command -v ansible &>/dev/null; then
+            echo "ansible: installed ($(ansible --version | head -n 1))"
+        else
+            echo "ansible: not installed"
+        fi
         ;;
     5)
         echo "Exiting..."

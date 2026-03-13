@@ -49,11 +49,18 @@ sudo rm -rf /var/lib/postgresql/
 sudo userdel -r postgres || true
 sudo groupdel postgres || true
 
-echo "5. Cleaning up Dependencies (Java, Unzip, etc.)..."
+echo "5. Removing Ansible and devops user..."
+sudo apt-get remove --purge ansible -y
+sudo apt-add-repository --remove ppa:ansible/ansible -y
+sudo userdel -r devops || true
+sudo groupdel devops || true
+sudo rm -f /etc/sudoers.d/devops
+
+echo "6. Cleaning up Dependencies (Java, Unzip, etc.)..."
 sudo apt-get autoremove -y
 sudo apt-get autoclean
 
 echo "=========================================="
 echo " Cleanup Complete!"
-echo " All services and related data have been removed."
+echo " All services, Ansible, and related data have been removed."
 echo "=========================================="

@@ -9,9 +9,10 @@ echo "------------------------------------------"
 echo "1) Jenkins"
 echo "2) Tomcat (Port 8085)"
 echo "3) SonarQube & PostgreSQL"
-echo "4) Exit"
+echo "4) Ansible (Master/Node)"
+echo "5) Exit"
 echo "=========================================="
-read -p "Enter your choice (1-4): " choice
+read -p "Enter your choice (1-5): " choice
 
 case $choice in
     1)
@@ -63,6 +64,16 @@ case $choice in
         fi
         ;;
     4)
+        echo "Starting Ansible deployment..."
+        if [ -f "./ansible_setup.sh" ]; then
+            chmod +x ./ansible_setup.sh
+            ./ansible_setup.sh
+        else
+            echo "Error: ansible_setup.sh script not found in the current directory."
+            exit 1
+        fi
+        ;;
+    5)
         echo "Exiting..."
         exit 0
         ;;

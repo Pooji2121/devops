@@ -51,3 +51,21 @@ After installation and startup, access your tools at these default ports:
 - **Jenkins**: `http://<your-server-ip>:8080`
 - **Tomcat**: `http://<your-server-ip>:8085` *(Changed from default 8080 to prevent conflict with Jenkins)*
 - **SonarQube**: `http://<your-server-ip>:9000` (Default Login: `admin` / `admin`)
+
+## 3. How to Setup Ansible (`ansible_setup.sh`)
+
+This script automates the Master-Node architecture for Ansible on AWS Ubuntu instances.
+
+### Step-by-Step Instructions
+1. **On the Node instances**:
+   - Run `chmod +x ansible_setup.sh`
+   - Run `./ansible_setup.sh` and choose **Option 2 (Node)**.
+2. **On the Master instance**:
+   - Run `chmod +x ansible_setup.sh`
+   - Run `./ansible_setup.sh` and choose **Option 1 (Master)**.
+   - Enter the number of nodes and their **Private IPs** when prompted.
+   - The script will install Ansible, configure hosts, and establish trust with the nodes.
+3. **Verify Connection**:
+   - Switch to the devops user: `su - devops`
+   - Test connectivity: `ansible all -m ping`
+
